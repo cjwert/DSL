@@ -1,23 +1,20 @@
+require 'singleton'
 class Store
-
-	def initialize(file)
+	include Singleton
+	def initialize
 		@products = []
 #		load_rules(file)
 	end
 	
-#	def load_rules(input)
-		#file = File.open(input)
-		#file.each_line do |line| # read in the file line by line
-			#puts line # handle each line after reading it in
-		#end
+#	def load_rules(input) #file = File.open(input) #file.each_line do |line| # read in the file line by line #puts line # handle each line after reading it in #end
 	#end
 	
 	def process_orders
 	
 	end
 	
-	def add_product
-		
+	def add_product(text)
+		@products << text	
 	end
 	
 	def run_store
@@ -42,6 +39,7 @@ end
 
 def product(text)
 	puts "Just read a product #{text}"
+	Store.instance.add_product(text)
 end
 
 def packing_slip(text)
@@ -73,5 +71,4 @@ def activate
 end
 
 load 'businessRules.txt'
-demo = Store.new "businessRules.txt"
 
