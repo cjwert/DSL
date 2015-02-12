@@ -30,7 +30,7 @@ class Store
 end
 
 class Product
-	attr_accessor :actions
+	attr_accessor :actions #makes public
 	
 	def initialize(name)
 		@product_name = name
@@ -86,6 +86,6 @@ end
 def activate
 	puts "Just read activate"
 end
-
+#exception goes around this thing
 load 'businessRules.txt'
 
