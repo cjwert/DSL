@@ -43,19 +43,19 @@ class Product
 	
 	def to_s
 		temp = @product_name
-		#if @actions.length > 0 
-		#	@actions.each {|action| temp += " #{action}"}
-		#end
+		if @actions.length > 0 
+			@actions.each {|action| temp += " #{action}"}
+		end
 		return temp
 	end
 
 end
 
 def product(text)
-	puts "Just read a product #{text}"
+	#puts "Just read a product #{text}"
 	temp = Product.new(text)
 	Store.instance.add_product(temp)
-	puts Store.instance.current_product
+	#puts Store.instance.current_product
 	Store.instance.current_product = temp
 end
 
@@ -88,4 +88,5 @@ def activate
 end
 
 load 'businessRules.txt'
-
+puts "Printing all products and their actions"
+Store.instance.process_orders
