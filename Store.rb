@@ -32,7 +32,7 @@ end
 class Product
 	attr_accessor :actions
 	
-	def intialize(name)
+	def initialize(name)
 		@product_name = name
 		@actions = []
 	end
@@ -53,7 +53,7 @@ end
 
 def product(text)
 	puts "Just read a product #{text}"
-	temp = Product.new	
+	temp = Product.new(text)
 	Store.instance.add_product(temp)
 	puts Store.instance.current_product
 	Store.instance.current_product = temp
