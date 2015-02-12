@@ -1,5 +1,6 @@
 require 'singleton'
 class Store
+	attr_accessor :current_product
 	include Singleton
 	def initialize
 		@products = []
@@ -10,7 +11,7 @@ class Store
 	#end
 	
 	def process_orders
-	
+		@products.each { |product| puts product }
 	end
 	
 	def add_product(text)
@@ -29,17 +30,33 @@ class Store
 end
 
 class Product
-	#attr_reader actions
+	attr_accessor :actions
 	
-	def intialize(text)
-		@product_name = text
+	def intialize(name)
+		@product_name = name
+		@actions = []
 	end
 	
+	def add_action(action)
+		@actions << action
+	end
+	
+	def to_s
+		temp = @product_name
+		#if @actions.length > 0 
+		#	@actions.each {|action| temp += " #{action}"}
+		#end
+		return temp
+	end
+
 end
 
 def product(text)
 	puts "Just read a product #{text}"
-	Store.instance.add_product(text)
+	temp = Product.new	
+	Store.instance.add_product(temp)
+	puts Store.instance.current_product
+	Store.instance.current_product = temp
 end
 
 def packing_slip(text)
