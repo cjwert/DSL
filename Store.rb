@@ -1,14 +1,12 @@
 require 'singleton'
 class Store
-	attr_accessor :current_product
+	attr_accessor :current_product, :products	#make public
+
 	include Singleton
+
 	def initialize
 		@products = Hash.new
-#		load_rules(file)
 	end
-	
-#	def load_rules(input) #file = File.open(input) #file.each_line do |line| # read in the file line by line #puts line # handle each line after reading it in #end
-	#end
 	
 	def add_product(text)
 		@products[text] = Array.new	
@@ -24,44 +22,23 @@ class Store
 			print "Enter product type or 'quit' to end: "
 			temp = gets.chomp
 			if temp == "quit" then shopping = false else
-				#puts @products.keys
-				array = @products["video"]
-				puts array
-				#array.each{|action| puts "---- #{action}"}
+				if(Store.instance.products.keys.include? temp)
+					@products.fetch(temp).each{|action| puts "---- #{action}"}
+				else
+					puts "Error: Product not defined"
+				end
 			end
+			puts ""
 		end
-	end
-	
-	
-	def add_parameterized_process(text)
-		temp = text.to_sym
-	end
-	
+	end	
 end
 
-class Product
-	attr_accessor :actions, :product_name	#makes public
-	
-	def initialize(name)
-		@product_name = name
-		@actions = []
-	end
-	
-	def to_s
-		temp = @product_name
-		if @actions.length > 0 
-			@actions.each {|action| temp += " #{action}"}
-		end
-		return temp
-	end
-
-end
 
 def product(text)
-	#puts "Just read a product #{text}"
-	temp = Product.new(text.chomp)
-	Store.instance.add_product(temp)
-	#puts Store.instance.current_product
+	temp = text.chomp
+	if !Store.instance.products.keys.include? temp	#check if duplicate
+		Store.instance.add_product(temp)
+	end
 	Store.instance.current_product = temp
 end
 
@@ -90,8 +67,16 @@ def notify(text)
 end
 
 def activate
-	Store.instance.add_action("activate #{Store.instance.current_product.product_name}")
+	Store.instance.add_action("activate #{Store.instance.current_product}")
 end
 #exception goes around this thing
-load 'businessRules.txt'
-Store.instance.run_store
+begin
+	load 'businessRules.txt'
+rescue NameError => ex
+	err = ex.to_s[/`\w+\'/]
+	err = err[1..err.length - 2]
+	puts "Action in rules file is invalid: #{err}"
+	exit
+end
+
+
