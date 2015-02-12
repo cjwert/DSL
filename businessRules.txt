@@ -1,26 +1,16 @@
 product 'book'
 packing_slip 'shipping'
-packing_slip 'royalty;
-
-
+packing_slip 'royalty'
 product 'pass'
 email 'purchaser'
 notify 'ski resort'
-
-
 product 'video'
 pay 'comission'
 includes_free 'first aid video'
-
-
 product 'book'
 pay 'commission'
-
-
 product 'boots'
-include 'certificate'
-
-
+includes 'certificate'
 product 'membership'
 activate
 email 'purchaser'
