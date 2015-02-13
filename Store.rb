@@ -8,6 +8,17 @@ class Store
 		@products = Hash.new
 	end
 	
+	def load_rules(file)
+		begin
+			load file 
+		rescue NameError => ex
+			err = ex.to_s[/`\w+\'/]
+			err = err[1..err.length - 2]
+			puts "Action in rules file is invalid: #{err}"
+			raise ArgumentError
+		end
+	end
+
 	def add_product(text)
 		@products[text] = Array.new	
 	end
@@ -69,14 +80,4 @@ end
 def activate
 	Store.instance.add_action("activate #{Store.instance.current_product}")
 end
-#exception goes around this thing
-begin
-	load 'businessRules.txt'
-rescue NameError => ex
-	err = ex.to_s[/`\w+\'/]
-	err = err[1..err.length - 2]
-	puts "Action in rules file is invalid: #{err}"
-	exit
-end
-
 
