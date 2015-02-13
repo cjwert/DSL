@@ -1,3 +1,3 @@
 require './Store.rb'
-Store.instance.load_rules("businessRules.txt")
-Store.instance.run_store
+Store.instance.load_rules("businessRules.txt") # load the rules
+Store.instance.run_store # run the store
